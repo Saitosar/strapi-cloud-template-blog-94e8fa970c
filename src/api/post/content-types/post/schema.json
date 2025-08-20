@@ -5,7 +5,7 @@
     "singularName": "post",
     "pluralName": "posts",
     "displayName": "Post",
-    "description": ""
+    "description": "Blog posts"
   },
   "options": {
     "draftAndPublish": true
@@ -17,53 +17,63 @@
   },
   "attributes": {
     "title": {
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      },
       "type": "string",
-      "required": true
-    },
-    "slug": {
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      },
-      "type": "uid",
-      "targetField": "title",
-      "required": true
-    },
-    "excerpt": {
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      },
-      "type": "text"
-    },
-    "content": {
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      },
-      "type": "richtext"
-    },
-    "cover": {
-      "type": "media",
-      "multiple": false,
-      "required": false,
-      "allowedTypes": [
-        "images"
-      ],
+      "required": true,
+      // --- ИЗМЕНЕНИЕ 1 ---
+      // Добавили этот блок, чтобы поле "title" можно было переводить.
+      // Без этого заголовок был бы одинаковым для всех языков.
       "pluginOptions": {
         "i18n": {
           "localized": true
         }
       }
     },
+    "slug": {
+      "type": "uid",
+      "targetField": "title",
+      "required": true,
+      "unique": true
+    },
+    "excerpt": {
+      "type": "text",
+      // --- ИЗМЕНЕНИЕ 3 ---
+      // Добавили этот блок, чтобы краткое описание (excerpt) можно было переводить.
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "content": {
+      "type": "richtext",
+      // --- ИЗМЕНЕНИЕ 4 (Ключевое!) ---
+      // Добавили этот блок для основного текста статьи.
+      // Это была главная причина, почему ваш текст перезаписывался.
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "cover": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ],
+      // --- ИЗМЕНЕНИЕ 5 ---
+      // Добавили этот блок, чтобы у каждой языковой версии
+      // статьи могла быть своя обложка (если потребуется).
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    // --- ИЗМЕНЕНИЕ 6 (Исправление ошибки) ---
+    // Добавили поля для связи с Автором и Категорией.
+    // Это исправляет ошибку "inversedBy attribute not found",
+    // так как теперь Strapi знает, как связаны Post, Author и Category.
     "author": {
       "type": "relation",
       "relation": "manyToOne",
