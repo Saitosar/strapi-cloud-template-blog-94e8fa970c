@@ -70,6 +70,16 @@
       "relation": "manyToOne",
       "target": "api::category.category",
       "inversedBy": "posts"
+    },
+    "likes": {
+      "type": "integer",
+      "default": 0,
+      "required": true,
+      "pluginOptions": {
+        "i18n": {
+            "localized": false
+        }
+      }
     }
   }
 }
