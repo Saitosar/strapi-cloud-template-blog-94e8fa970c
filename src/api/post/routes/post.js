@@ -1,7 +1,4 @@
 'use strict';
-const { factories } = require('@strapi/strapi');
-
-module.exports = factories.createCoreRouter('api::post.post');
 
 module.exports = {
   routes: [
@@ -35,6 +32,6 @@ module.exports = {
       method: 'PUT',
       path: '/posts/:id/like',
       handler: 'post.like',
-    }
-  ]
-}
+    },
+  ],
+};

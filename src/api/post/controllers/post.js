@@ -1,38 +1,22 @@
-// src/api/post/routes/post.js (ИСПРАВЛЕННАЯ ВЕРСИЯ)
+// @ts-nocheck
 'use strict';
+const { createCoreController } = require('@strapi/strapi').factories;
 
-module.exports = {
-  routes: [
-    {
-      method: 'GET',
-      path: '/posts',
-      handler: 'post.find',
-    },
-    {
-      method: 'GET',
-      path: '/posts/:id',
-      handler: 'post.findOne',
-    },
-    {
-      method: 'POST',
-      path: '/posts',
-      handler: 'post.create',
-    },
-    {
-      method: 'PUT',
-      path: '/posts/:id',
-      handler: 'post.update',
-    },
-    {
-      method: 'DELETE',
-      path: '/posts/:id',
-      handler: 'post.delete',
-    },
-    // === НАШ НОВЫЙ МАРШРУТ ДЛЯ ЛАЙКОВ ===
-    {
-      method: 'PUT',
-      path: '/posts/:id/like',
-      handler: 'post.like',
-    }
-  ]
-}
+module.exports = createCoreController('api::post.post', ({ strapi }) => ({
+  async like(ctx) {
+    const { id } = ctx.params;
+
+    const entity = await strapi.db.query('api::post.post').findOne({
+      where: { id },
+      select: ['likes'],
+    });
+    if (!entity) return ctx.notFound('Post not found');
+
+    const updated = await strapi.db.query('api::post.post').update({
+      where: { id },
+      data: { likes: (entity.likes || 0) + 1 },
+    });
+
+    ctx.body = { id: updated.id, likes: updated.likes };
+  },
+}));
