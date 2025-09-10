@@ -74,7 +74,7 @@
     "likes": {
       "type": "integer",
       "default": 0,
-      "required": true,
+      "required": false,
       "pluginOptions": {
         "i18n": {
             "localized": false
