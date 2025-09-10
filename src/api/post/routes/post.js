@@ -27,11 +27,5 @@ module.exports = {
       path: '/posts/:id',
       handler: 'post.delete',
     },
-    // === НАШ НОВЫЙ МАРШРУТ ДЛЯ ЛАЙКОВ ===
-    {
-      method: 'PUT',
-      path: '/posts/:id/like',
-      handler: 'post.like',
-    },
   ],
 };
